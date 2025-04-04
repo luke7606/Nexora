@@ -9,7 +9,7 @@ Este MVP simula cómo Nexora puede generar recomendaciones de gestión y KPIs pe
 Completá los datos de tu equipo y recibí una sugerencia basada en IA.
 """)
 
-# API KEY Y ENDPOINT DE OPENROUTER
+# API KEY Y ENDPOINT PARA OPENROUTER
 openai.api_key = "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"
 openai.base_url = "https://openrouter.ai/api/v1"
 
@@ -21,7 +21,7 @@ with st.form("formulario_equipo"):
     kpi = st.text_input("KPI principal", placeholder="Ej: Velocidad de entrega")
     enviar = st.form_submit_button("Generar recomendación IA")
 
-# FUNCIÓN PARA GENERAR RECOMENDACIÓN
+# FUNCIÓN CORREGIDA PARA GENERAR RECOMENDACIÓN
 def generar_recomendacion(industria, cultura, objetivo, kpi):
     prompt = f"""
 Actuá como un experto en gestión de equipos con enfoque en KPIs y uso de inteligencia artificial. 
@@ -37,9 +37,9 @@ KPI principal: {kpi}
         model="mistralai/mistral-7b-instruct",
         messages=[{"role": "user", "content": prompt}]
     )
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message["content"].strip()
 
-# GENERACIÓN Y RESULTADO
+# GENERACIÓN Y VISUALIZACIÓN
 if enviar:
     if not all([industria, cultura, objetivo, kpi]):
         st.warning("Por favor completá todos los campos.")
